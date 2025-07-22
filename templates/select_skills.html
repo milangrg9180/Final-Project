@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Select Your Skills</title>
+    <style>
+      .skill-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+      .skill-option {
+        padding: 8px 15px;
+        background: #e0e0e0;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+      .skill-option.selected {
+        background: #4caf50;
+        color: white;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Select Your Skills</h1>
+    <p>Choose from popular skills or add your own:</p>
+
+    <form method="POST">
+      <div class="skill-container">
+        {% for skill in popular_skills %}
+        <div
+          class="skill-option {% if skill in current_skills %}selected{% endif %}"
+          onclick="toggleSkill(this, '{{ skill }}')"
+        >
+          {{ skill }}
+        </div>
+        {% endfor %}
+      </div>
+
+      <input
+        type="hidden"
+        name="skills"
+        id="selectedSkills"
+        value="{{ current_skills|join(',') }}"
+      />
+
+      <label for="additional_skills"
+        >Additional Skills (comma separated):</label
+      >
+      <textarea name="additional_skills" id="additional_skills">
+            {% for skill in current_skills %}{% if skill not in popular_skills %}{{ skill }},{% endif %}{% endfor %}
+        </textarea
+      >
+
+      <button type="submit">Save Skills</button>
+    </form>
+
+    <script>
+      function toggleSkill(element, skill) {
+        element.classList.toggle("selected");
+        const selected = document
+          .getElementById("selectedSkills")
+          .value.split(",")
+          .filter(Boolean);
+
+        if (element.classList.contains("selected")) {
+          selected.push(skill);
+        } else {
+          const index = selected.indexOf(skill);
+          if (index > -1) selected.splice(index, 1);
+        }
+
+        document.getElementById("selectedSkills").value = selected.join(",");
+      }
+    </script>
+  </body>
+</html>

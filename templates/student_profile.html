@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Student Profile{% endblock %} {%
+block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Edit Your Profile</h3>
+      </div>
+      <div class="card-body">
+        <!-- Added link to skill selection -->
+        <div class="alert alert-info mb-4">
+          <strong>Tip:</strong> For better recommendations, make sure your
+          skills are up to date.
+          <a href="{{ url_for('select_skills') }}">Update your skills</a>
+        </div>
+
+        <form method="POST">
+          <!-- ... rest of the form remains the same ... -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
